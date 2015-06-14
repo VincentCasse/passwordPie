@@ -1,0 +1,43 @@
+{
+  "name": "PasswordPie",
+  "description": "Password Pie is a solution to store you password, and encrypt it before cloud synchronization",
+  "version": "0.1.0",
+  "author": {
+    "name": "Vincent Cassé",
+    "url": "https://beveloper.fr"
+  },
+  "scripts": {
+    "start": "npm install && bower install && rm -rf public/*; brunch watch --server",
+    "test": "npm install && bower install && node_modules/.bin/karma start",
+    "clean": "rm -rf node_modules/; rm -rf bower_components/; rm -rf public/"
+  },
+  "main": "public/passwordPie.js",
+  "licenses": [
+    {
+      "type": "MIT License",
+      "url": "http://opensource.org/licenses/mit-license.html"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:VincentCasse/passwordPie.git"
+  },
+  "readme": "README.md",
+  "devDependencies": {
+    "babel-brunch": "^5.1.2",
+    "brunch": "^1.8.3",
+    "coffee-script": "^1.9.2",
+    "fb-flo-brunch": "^1.7.22",
+    "jade-brunch": "^1.8.1",
+    "javascript-brunch": "^1.7.1",
+    "jshint-brunch": "^1.8.0",
+    "karma": "~0.12.0",
+    "karma-chrome-launcher": "~0.1.0",
+    "karma-cli": "0.0.4",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-jasmine": "~0.2.0",
+    "karma-junit-reporter": "~0.2.0",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "sass-brunch": "^1.8.10"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "PasswordPie",
+  "description": "Password Pie is a solution to store you password, and encrypt it before cloud synchronization",
+  "version": "0.1.0",
+  "author": {
+    "name": "Vincent Cassé",
+    "url": "https://beveloper.fr"
+  },
+  "main": [
+    "public/vendor.js",
+    "public/app.js"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "amaretti": "^0.2.1",
+    "localforage": "~1.2.3"
+  }
+}
