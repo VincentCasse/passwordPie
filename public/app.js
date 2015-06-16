@@ -122,20 +122,33 @@ var _amaretti = require("amaretti");
 
 var _amaretti2 = _interopRequireDefault(_amaretti);
 
-var _viewsList = require("views/list");
-
-var _viewsList2 = _interopRequireDefault(_viewsList);
-
 var App = {
 	items: ["Learn", "Test"],
 
 	init: function init() {
-		var html = document.createElement("div");
-		html.innerHTML = (0, _viewsList2["default"])({ items: App.items });
+
+		// Declare events
+		window.addEventListener("hashchange", function (newUrl) {
+			App.routeChange(window.location.hash);
+		}, false);
+
 		_amaretti2["default"].getSalt().then(function (salt) {
 			console.log("App salted ", salt);
 		});
-		document.querySelector("body").appendChild(html);
+
+		App.routeChange(window.location.hash);
+	},
+
+	routeChange: function routeChange(route) {
+
+		if (!route) {
+			route = "list";
+		} else {
+			route = route.substring(1);
+		}
+
+		var template = require("views/" + route);
+		document.querySelector("content").innerHTML = template({ items: App.items });
 	}
 };
 
@@ -143,37 +156,41 @@ exports["default"] = App;
 module.exports = exports["default"];
 });
 
-require.register("views/list", function(exports, require, module) {
-var __templateData = function template(locals) {
-var buf = [];
-var jade_mixins = {};
-var jade_interp;
-var locals_ = (locals || {}),items = locals_.items;
-buf.push("<h2>Thing to do:</h2><ul id=\"mainTodo\" class=\"tasks\">");
-// iterate items
-;(function(){
-  var $$obj = items;
-  if ('number' == typeof $$obj.length) {
+require.register("views/done", function(exports, require, module) {
+var __templateData = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+  var lambda=this.lambda, escapeExpression=this.escapeExpression;
+  return "		<li> end: "
+    + escapeExpression(lambda(depth0, depth0))
+    + "</li>\n";
+},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  var stack1, buffer = "<h2>Things to done</h2>\n\n<ul class=\"tasks\" id=mainTodo>\n";
+  stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.items : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "</ul>\n";
+},"useData":true});
+if (typeof define === 'function' && define.amd) {
+  define([], function() {
+    return __templateData;
+  });
+} else if (typeof module === 'object' && module && module.exports) {
+  module.exports = __templateData;
+} else {
+  __templateData;
+}
+});
 
-    for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
-      var item = $$obj[$index];
-
-buf.push("<li>" + (jade.escape(null == (jade_interp = item) ? "" : jade_interp)) + "</li>");
-    }
-
-  } else {
-    var $$l = 0;
-    for (var $index in $$obj) {
-      $$l++;      var item = $$obj[$index];
-
-buf.push("<li>" + (jade.escape(null == (jade_interp = item) ? "" : jade_interp)) + "</li>");
-    }
-
-  }
-}).call(this);
-
-buf.push("</ul>");;return buf.join("");
-};
+;require.register("views/list", function(exports, require, module) {
+var __templateData = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+  var lambda=this.lambda, escapeExpression=this.escapeExpression;
+  return "		<li> cool: "
+    + escapeExpression(lambda(depth0, depth0))
+    + "</li>\n";
+},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  var stack1, buffer = "<h2>Things to do</h2>\n\n<ul class=\"tasks\" id=mainTodo>\n";
+  stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.items : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "</ul>\n";
+},"useData":true});
 if (typeof define === 'function' && define.amd) {
   define([], function() {
     return __templateData;

@@ -30,7 +30,10 @@ module.exports = config:
 				warnOnly: true
 		babel:
 			ignore: [
-				/^(bower_components|vendor)/
+				/^(bower_components|vendor|node_modules)/
 			]
+		handlebars:
+			include:
+				runtime: false 
 
 

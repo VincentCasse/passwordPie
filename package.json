@@ -24,11 +24,14 @@
   },
   "readme": "README.md",
   "devDependencies": {
+    "appcache-brunch": "^1.7.1",
     "babel-brunch": "^5.1.2",
+    "browser-sync-brunch": "0.0.9",
     "brunch": "^1.8.3",
+    "clean-css-brunch": "^1.7.2",
     "coffee-script": "^1.9.2",
     "fb-flo-brunch": "^1.7.22",
-    "jade-brunch": "^1.8.1",
+    "handlebars-brunch": "^1.9.1",
     "javascript-brunch": "^1.7.1",
     "jshint-brunch": "^1.8.0",
     "karma": "~0.12.0",
@@ -38,6 +41,9 @@
     "karma-jasmine": "~0.2.0",
     "karma-junit-reporter": "~0.2.0",
     "karma-phantomjs-launcher": "^0.1.4",
-    "sass-brunch": "^1.8.10"
+    "postcss-brunch": "^0.4.1",
+    "sass-brunch": "^1.8.10",
+    "uglify-js-brunch": "^1.7.8",
+    "version-brunch": "^1.0.1"
   }
 }

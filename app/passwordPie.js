@@ -1,18 +1,35 @@
 "use strict";
 
 import amaretti from "amaretti";
-import tmpl from "views/list";
 
 var App = {
 	items: ['Learn', 'Test'],
 
 	init: function init() {
-		var html = document.createElement('div');
-		html.innerHTML = tmpl({items: App.items }); 
+
+		// Declare events
+		window.addEventListener('hashchange', function(newUrl) {
+			App.routeChange(window.location.hash);
+		}, false);
+
 		amaretti.getSalt().then(function (salt) {
 			console.log('App salted ', salt);
 		});
-		document.querySelector('body').appendChild(html);
+
+		App.routeChange(window.location.hash);
+
+	},
+
+	routeChange: function(route) {
+
+		if (!route) {
+			route = 'list';
+		} else {
+			route = route.substring(1);
+		}
+
+		var template = require('views/'+route);
+		document.querySelector('content').innerHTML = template({items: App.items });
 	}
 };
 

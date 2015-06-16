@@ -1,0 +1,18 @@
+CACHE MANIFEST
+# 8758dc580f7ce76f41fd105cbf75b7075e02917b
+
+NETWORK:
+*
+
+FALLBACK:
+
+
+CACHE:
+./app.css
+./app.css.map
+./app.js
+./app.js.map
+./index.html
+./vendor.js
+./vendor.js.map
+./version.json
