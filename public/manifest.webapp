@@ -1,0 +1,21 @@
+{
+  "name": "passwordPie",
+  "description": "Password Pie is a solution to store you password, and encrypt it before cloud synchronization",
+  "launch_path": "/index.html",
+  "appcache_path": "/appcache.appcache",
+  "developer": {
+    "name": "Vincent Cassé",
+    "url": "http://beveloper.fr"
+  },
+  "locales": {
+    "en": {
+      "name": "PasswordPie",
+      "description": "Safe store password solution"
+    },
+    "fr": {
+      "name": "PasswordPie",
+      "description": "Stockage de mot de passe sécurisé"
+    }
+  },
+  "default_locale": "en"
+}

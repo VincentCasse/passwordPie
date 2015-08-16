@@ -32,9 +32,10 @@
   "-W078": true,
 
   "globals": {
-    "require" : false,
-    "module"  : false,
-    "define"  : false,
-    "global"  : false
+    "require"     : false,
+    "module"      : false,
+    "define"      : false,
+    "global"      : false,
+    "localforage" : false
   }
 }

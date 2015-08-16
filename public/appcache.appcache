@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 8758dc580f7ce76f41fd105cbf75b7075e02917b
+# d4896064692a6a8d6bfc7802d5d8b4452db533e3
 
 NETWORK:
 *
@@ -13,6 +13,7 @@ CACHE:
 ./app.js
 ./app.js.map
 ./index.html
+./manifest.webapp
 ./vendor.js
 ./vendor.js.map
 ./version.json

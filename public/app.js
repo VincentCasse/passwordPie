@@ -109,9 +109,58 @@
   require.brunch = true;
   globals.require = require;
 })();
+require.register("controllers/List", function(exports, require, module) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _servicesGringotts = require("../services/gringotts");
+
+var _servicesGringotts2 = _interopRequireDefault(_servicesGringotts);
+
+var ListController = {
+
+  app: null,
+  gringotts: null,
+
+  init: function init(app) {
+    this.app = app;
+
+    // load services
+    this.gringotts = this.app.service.load(_servicesGringotts2["default"]);
+
+    return this;
+  },
+
+  load: function load() {
+    var res = { items: null };
+
+    this.gringotts.list().then(function (keys) {
+      res.items = keys;
+      console.log('keys', keys);
+    });
+
+    return res;
+  },
+
+  unload: function unload() {
+    this.app = undefined;
+  }
+
+};
+
+exports["default"] = ListController;
+module.exports = exports["default"];
+});
+
 require.register("passwordPie", function(exports, require, module) {
 "use strict";
 
+// lib
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
@@ -120,20 +169,56 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 var _amaretti = require("amaretti");
 
+// controllers
+
 var _amaretti2 = _interopRequireDefault(_amaretti);
 
+var _controllersList = require("./controllers/List");
+
+// views
+
+var _controllersList2 = _interopRequireDefault(_controllersList);
+
+var _viewsList = require("./views/list");
+
+// Service singleton system
+
+var _viewsList2 = _interopRequireDefault(_viewsList);
+
+var ServiceManager = function ServiceManager(app) {
+	this.app = app;
+	this.services = {};
+};
+ServiceManager.prototype.load = function (service) {
+	if (this.services[service._name_] === undefined) {
+		this.services[service._name_] = service.init(this.app);
+	}
+	return this.services[service._name_];
+};
+
 var App = {
-	items: ["Learn", "Test"],
+	items: ['Learn', 'Test'],
+	routing: {
+		'list': {
+			controller: _controllersList2["default"],
+			view: _viewsList2["default"]
+		}
+	},
+	currentRoute: null,
+	service: null,
 
 	init: function init() {
 
+		// Load service manager
+		this.service = new ServiceManager(this);
+
 		// Declare events
-		window.addEventListener("hashchange", function (newUrl) {
+		window.addEventListener('hashchange', function (newUrl) {
 			App.routeChange(window.location.hash);
 		}, false);
 
 		_amaretti2["default"].getSalt().then(function (salt) {
-			console.log("App salted ", salt);
+			console.log('App salted ', salt);
 		});
 
 		App.routeChange(window.location.hash);
@@ -141,18 +226,123 @@ var App = {
 
 	routeChange: function routeChange(route) {
 
+		// Unload old controller
+		if (this.currentRoute) {
+			this.routing[this.currentRoute].unload();
+		}
+
 		if (!route) {
-			route = "list";
+			route = 'list';
 		} else {
 			route = route.substring(1);
 		}
 
-		var template = require("views/" + route);
-		document.querySelector("content").innerHTML = template({ items: App.items });
+		var ctrl = this.routing[route].controller.init(this);
+		document.querySelector('content').innerHTML = this.routing[route].view(ctrl.load());
 	}
 };
 
 exports["default"] = App;
+module.exports = exports["default"];
+});
+
+require.register("services/gringotts", function(exports, require, module) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _roundabout = require("./roundabout");
+
+/**
+ * This module needs to be run as a singleton!
+ *
+ * This module get data from roundabout service and manage crypto to get
+ * human readable informations
+ *
+ * It had to be a singleton because it store passphrase to uncrypt data
+ */
+
+var _roundabout2 = _interopRequireDefault(_roundabout);
+
+var Gringotts = {
+
+  _name_: 'gringott',
+  roundabout: null,
+  app: null,
+
+  init: function init(app) {
+    this.app = app;
+
+    // load services
+    this.app.service.load(_roundabout2["default"]);
+
+    return this;
+  },
+
+  // TODO: manage encryption
+
+  list: function list(path) {
+    return _roundabout2["default"].list(path);
+  },
+
+  read: function read(path) {
+    return _roundabout2["default"].read(path);
+  },
+
+  write: function write(path, data) {
+    return _roundabout2["default"].write(path, data);
+  }
+};
+
+exports["default"] = Gringotts;
+module.exports = exports["default"];
+});
+
+require.register("services/roundabout", function(exports, require, module) {
+/*global localforage:false */
+
+"use strict";
+
+/**
+ * This module needs to be run as a singleton!
+ *
+ * This module get data from differents sources (local, cloud...)
+ * It had to be a singleton because this module manage open connections
+ * to remote services
+ */
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var Roundabout = {
+
+  _name_: 'roundabout',
+  app: null,
+
+  init: function init(app) {
+    this.app = app;
+
+    return this;
+  },
+
+  list: function list(path) {
+    // TODO filter with path
+    return localforage.keys();
+  },
+
+  read: function read(path) {
+    return localforage.getItem(path);
+  },
+
+  write: function write(path, data) {
+    return localforage.setItem(path, data);
+  }
+};
+
+exports["default"] = Roundabout;
 module.exports = exports["default"];
 });
 

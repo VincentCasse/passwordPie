@@ -17,6 +17,6 @@
   ],
   "dependencies": {
     "amaretti": "^0.2.1",
-    "localforage": "~1.2.3"
+    "localforage": "~1.2.x"
   }
 }
